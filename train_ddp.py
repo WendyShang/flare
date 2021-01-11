@@ -266,7 +266,6 @@ def main():
     exp_name = env_name + '-' + ts + '-im' + str(args.image_size) +'-b'  \
     + str(args.batch_size) + '-f' + str(args.num_filters) + '-s' + str(args.seed)  + '-' + args.encoder_type
     exp_name = exp_name + '-alr' + str(args.actor_lr)
-    exp_name = exp_name + '_' + 'efficieint'
     args.work_dir = args.work_dir + '/'  + exp_name
 
     rank = args.local_rank
