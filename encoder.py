@@ -360,10 +360,10 @@ class PixelRNN2DEncoder(nn.Module):
             assert False
 
         lstm_hidden_vb = (torch.zeros(batch_size, self.feature_dim).to(device),
-                          torch.zeros(batch_size, self.feature_dim).to(device))               
+                          torch.zeros(batch_size, self.feature_dim).to(device))    
 
         for t in range(time_step):
-            hx, cx = self.lstm(x, lstm_hidden_vb)
+            hx, cx = self.lstm(h_fc[t], lstm_hidden_vb)
             lstm_hidden_vb = (hx, cx)
 
         if self.output_logits:
@@ -392,7 +392,7 @@ class PixelRNN2DEncoder(nn.Module):
         for i in range(self.num_layers):
             L.log_param('train_encoder/conv%s' % (i + 1), self.convs[i], step)
         L.log_param('train_encoder/fc', self.fc, step)
-        L.log_param('train_encoder/ln', self.ln, step)
+        # L.log_param('train_encoder/ln', self.ln, step)
 
 _AVAILABLE_ENCODERS = {'pixel': PixelEncoder, 
 'identity': IdentityEncoder, 
