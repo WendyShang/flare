@@ -353,7 +353,7 @@ class PixelRNN2DEncoder(nn.Module):
         try:
             h = h.view(time_step*batch_size, -1)
             h_fc = self.fc(h)
-            h_fc = h_fc.view(time_step, batch_size, -1)
+            h_fc = h_fc.view(batch_size, time_step, -1)
         except:
             print(obs.shape)
             print(h.shape)
@@ -363,7 +363,7 @@ class PixelRNN2DEncoder(nn.Module):
                           torch.zeros(batch_size, self.feature_dim).to(device))    
 
         for t in range(time_step):
-            hx, cx = self.lstm(h_fc[t], lstm_hidden_vb)
+            hx, cx = self.lstm(h_fc[:, t, :], lstm_hidden_vb)
             lstm_hidden_vb = (hx, cx)
 
         if self.output_logits:
